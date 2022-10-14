@@ -1,16 +1,14 @@
 import { DataSource } from "typeorm";
-import * as dotenv from "dotenv";
+import { envs } from "./common/env-values";
 
-dotenv.config();
-
-console.log(process.env.DATABASE_NAME);
+console.log(envs.DATABASE_HOST, envs.DATABASE_USER, envs.DATABASE_PASSWORD, envs.DATABASE_NAME);
 
 const AppDataSource = new DataSource({
   type: "postgres",
-  host: process.env.DATABASE_HOST,
-  username: process.env.DATABASE_USERNAME,
-  password: process.env.DATABASE_PASS,
-  database: process.env.DATABASE_NAME,
+  host: envs.DATABASE_HOST,
+  username: envs.DATABASE_USER,
+  password: envs.DATABASE_PASSWORD,
+  database: envs.DATABASE_NAME,
   entities: ["dist/**/*.entity{.ts,.js}"],
   migrationsTableName: "migrations",
   migrations: ["dist/**/migrations/*{.ts,.js}"],
