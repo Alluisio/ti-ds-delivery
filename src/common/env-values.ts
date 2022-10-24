@@ -9,4 +9,5 @@ export const envs = {
   DATABASE_USER: process.env.DATABASE_USER || "postgres",
   DATABASE_PASSWORD: `${process.env.DATABASE_PASSWORD || "postgres"}`,
   DATABASE_NAME: process.env.DATABASE_NAME || "delivery",
+  SALT_BCRYPT: +process.env.saltBcrypt || 10,
 };
