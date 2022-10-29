@@ -1,6 +1,8 @@
 import * as dotenv from "dotenv";
 dotenv.config();
 
+console.log(process.env.DATABASE_HOST);
+
 export const envs = {
   JWT_SECRET: process.env.JWT_SECRET || "secret",
   APP_PORT: +process.env.APP_PORT || 3333,
