@@ -15,7 +15,7 @@ const AppDataSource = new DataSource({
   migrationsRun: true,
   synchronize: false,
   logging: true,
-  ssl: true,
+  ssl: false,
 });
 
 export default AppDataSource;
