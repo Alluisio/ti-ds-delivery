@@ -1,7 +1,7 @@
 import { DataSource } from "typeorm";
 import { envs } from "./common/env-values";
 
-console.log(envs.DATABASE_HOST, envs.DATABASE_USER, envs.DATABASE_PASSWORD, envs.DATABASE_NAME);
+console.log(envs.DATABASE_HOST, envs.DATABASE_USER, envs.DATABASE_PASSWORD, envs.DATABASE_NAME, envs.APP_PORT);
 
 const AppDataSource = new DataSource({
   type: "postgres",
