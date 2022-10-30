@@ -1,6 +1,6 @@
 import { Entity, Column, PrimaryGeneratedColumn } from "typeorm";
 
-type Categories =
+export type Categories =
   | "TODOS"
   | "PIZZA"
   | "SANDUICHES"

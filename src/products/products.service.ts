@@ -1,5 +1,5 @@
 import { Injectable, Inject, HttpException, HttpStatus } from "@nestjs/common";
-import { Product } from "../entity/product.entity";
+import { Categories, Product } from "../entity/product.entity";
 import { Repository } from "typeorm";
 
 @Injectable()
@@ -33,5 +33,16 @@ export class ProductsService {
     });
 
     return products;
+  }
+
+  async findAllCategoriesByRegisteredProducts(): Promise<Categories[]> {
+    const products = await this.productsRepository
+      .createQueryBuilder("products")
+      .select(["category"])
+      .distinct()
+      .execute();
+
+    const categories = products.map((p: { category: Categories }) => p.category);
+    return categories;
   }
 }

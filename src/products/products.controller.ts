@@ -1,5 +1,5 @@
 import { Controller, Get } from "@nestjs/common";
-import { Product } from "../entity/product.entity";
+import { Categories, Product } from "../entity/product.entity";
 import { ProductsService } from "./products.service";
 
 @Controller("products")
@@ -9,5 +9,10 @@ export class ProductsController {
   @Get()
   async findAll(): Promise<Product[]> {
     return this.productsService.findAll();
+  }
+
+  @Get("dropdown-category")
+  async findAllCategoriesByRegisteredProducts(): Promise<Categories[]> {
+    return this.productsService.findAllCategoriesByRegisteredProducts();
   }
 }
