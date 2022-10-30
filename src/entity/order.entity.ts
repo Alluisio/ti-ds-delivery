@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, ManyToOne, ManyToMany, JoinTable } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, ManyToOne, ManyToMany, JoinTable, Column } from "typeorm";
 import { Product } from "./product.entity";
 import { User } from "./user.entity";
 
@@ -23,6 +23,9 @@ export class Order {
     },
   })
   products: Product[];
+
+  @Column({ name: "created_at" })
+  createdAt?: Date;
 
   constructor(id?: number, user?: User, products?: Product[]) {
     this.id = id;

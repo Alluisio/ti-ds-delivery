@@ -2,9 +2,11 @@ import { Injectable, Inject, HttpException, HttpStatus } from "@nestjs/common";
 import { OrderDTO } from "../entity/dtos/order.dto";
 import { Order } from "../entity/order.entity";
 import { Repository } from "typeorm";
+import { format } from "date-fns";
 import { OrderInputDTO } from "../entity/dtos/order-input.dto";
 import { ProductsService } from "../products/products.service";
 import { UsersService } from "../users/users.service";
+import { OrdersByUser } from "../entity/dtos/orders-by-user";
 
 @Injectable()
 export class OrdersService {
@@ -55,5 +57,31 @@ export class OrdersService {
     });
 
     return this.ordersRepository.save(order);
+  }
+
+  async findAllOrdersByUser(userId: string): Promise<OrdersByUser[]> {
+    try {
+      const allOrdersByUser = await this.ordersRepository.find({
+        where: { user: { id: +userId } },
+        relations: { products: true },
+        order: {
+          createdAt: {
+            direction: "DESC",
+          },
+        },
+      });
+
+      if (allOrdersByUser.length == 0) {
+        throw new HttpException("Não existe pedidos para este usuário", HttpStatus.NOT_FOUND);
+      }
+
+      const newOrders = allOrdersByUser.map((ou) => {
+        return new OrdersByUser(ou.createdAt, format(ou.createdAt, "dd/MM/yyyy"), ou.products.length);
+      });
+
+      return newOrders;
+    } catch {
+      throw new HttpException("Não foi possível carregar os pedidos deste usuário", HttpStatus.INTERNAL_SERVER_ERROR);
+    }
   }
 }
